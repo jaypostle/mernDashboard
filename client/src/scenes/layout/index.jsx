@@ -13,10 +13,10 @@ function Layout() {
   const userId = useSelector((state) => state.global.userId); // this gets info from redux toolkit (not query)
   const { data } = useGetUserQuery(userId);
 
-  console.log(userId);
-  console.log(process.env.REACT_APP_BASE_URL);
+  // console.log(userId);
+  // console.log(process.env.REACT_APP_BASE_URL);
 
-  console.log(data);
+  // console.log(data);
 
   // useEffect(() => {
   //   console.log(data);
