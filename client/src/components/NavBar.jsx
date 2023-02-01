@@ -47,7 +47,7 @@ function NavBar({ user, isSidebarOpen, setIsSidebarOpen }) {
         <FlexBetween>
           <IconButton
             onClick={() => {
-              console.log("open/close sidebar");
+              // console.log("open/close sidebar");
               setIsSidebarOpen(!isSidebarOpen);
             }}
           >
