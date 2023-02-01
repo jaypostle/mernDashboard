@@ -3,6 +3,7 @@ import { Box, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useGetTransactionsQuery } from "state/api";
 import Header from "components/Header";
+import DataGridCustomToolbar from "components/DataGridCustomToolbar";
 
 function Transactions() {
   const theme = useTheme();
@@ -12,6 +13,8 @@ function Transactions() {
   const [pageSize, setPageSize] = useState(20);
   const [sort, setSort] = useState({});
   const [search, setSearch] = useState("");
+
+  const [searchInput, setSearchInput] = useState(""); // we use this 'temporary search state' because when searchInput changes, the server is automatically called. We don't want to call it every time so we change searchInput on change and then on the button click, inside teh DataGridCustomToolbar component, we change search based on the value of searchInput
 
   const { data, isLoading } = useGetTransactionsQuery({
     page,
@@ -87,6 +90,7 @@ function Transactions() {
           rows={(data && data.transactions) || []}
           columns={columns}
           rowCount={(data && data.total) || 0} // setting the rows to be the total data count
+          rowsPerPageOptions={[20, 50, 100]} // options that user can select, number of items to view
           pagination
           page={page} // setting these as the state value we created
           pageSize={pageSize} // setting these as the state value we created
@@ -95,7 +99,10 @@ function Transactions() {
           onPageChange={(newPage) => setPage(newPage)}
           onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
           onSortModelChange={(newSortModel) => setSort(...newSortModel)}
-          //   components=
+          components={{ Toolbar: DataGridCustomToolbar }}
+          componentsProps={{
+            toolbar: { searchInput, setSearchInput, setSearch },
+          }}
         />
       </Box>
     </Box>
